@@ -1,0 +1,25 @@
+{
+  "css.validate": true,
+  "editor.insertSpaces": true,
+  "editor.renderIndentGuides": true,
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "javascript.format.enable": false,
+  "editor.formatOnSave": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "npm.enableScriptExplorer": true,
+  "stylelint.enable": true,
+  "stylelint.configOverrides": {
+    "ignoreFiles": [
+      "**/*.js",
+      "**/*.ts",
+      "**/*.html",
+      "**/*.md",
+      "**/node_modules/**/*.*"
+    ]
+  },
+  "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}"
+}
