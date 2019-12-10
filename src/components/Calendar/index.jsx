@@ -25,35 +25,48 @@ moment.updateLocale('ja', {
 
 const localizer = momentLocalizer(moment);
 
+const today = new Date();
+const tomorrow = 'Tue Dec 11 2019 12:14:56 GMT+0900 (日本標準時)';
+
 const initialEvents = [
   {
-    start: new Date(),
-    end: new Date(),
+    start: today,
+    end: today,
     name: 'Ameku Genta',
   },
   {
-    start: new Date(),
-    end: new Date(),
+    start: today,
+    end: today,
     name: 'Ameku Genta',
   },
   {
-    start: new Date(),
-    end: new Date(),
+    start: today,
+    end: today,
     name: 'Ameku Genta',
   },
   {
-    start: new Date(),
-    end: new Date(),
+    start: today,
+    end: today,
     name: 'Ameku Genta',
   },
   {
-    start: new Date(),
-    end: new Date(),
+    start: tomorrow,
+    end: tomorrow,
     name: 'Ameku Genta',
   },
   {
-    start: new Date(),
-    end: new Date(),
+    start: tomorrow,
+    end: tomorrow,
+    name: 'Ameku Genta',
+  },
+  {
+    start: tomorrow,
+    end: tomorrow,
+    name: 'Ameku Genta',
+  },
+  {
+    start: tomorrow,
+    end: tomorrow,
     name: 'Ameku Genta',
   },
 ];
@@ -71,7 +84,7 @@ const EventWrapper = ({ event }) => {
   );
 };
 
-const renderDateCell = openDialog => ({ value, children, ...rest }) => {
+const renderDateCell = openDialog => ({ value, children }) => {
   const weekDayJp = moment(value).format('ddd');
   const classes = children.props.className;
   const isNoRange = classes.includes('rbc-off-range-bg');
@@ -88,6 +101,8 @@ const renderDateCell = openDialog => ({ value, children, ...rest }) => {
   );
 };
 
+const renderToolbar = events => props => <Toolbar {...{ events, ...props }} />;
+
 const BigCalendar = React.memo(function BigCalendar({ openDialog, events }) {
   return (
     <CalendarStyles y={900}>
@@ -96,7 +111,7 @@ const BigCalendar = React.memo(function BigCalendar({ openDialog, events }) {
         events={events}
         views={['month']}
         components={{
-          toolbar: Toolbar,
+          toolbar: renderToolbar(events),
           eventWrapper: EventWrapper,
           dateCellWrapper: renderDateCell(openDialog),
         }}
@@ -125,7 +140,6 @@ export const Calendar = () => {
     }
     hideDialog();
   };
-  console.log(events);
   return (
     <>
       <BigCalendar {...{ events, openDialog }} />

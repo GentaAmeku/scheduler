@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { toJpDay } from '../../shared';
 
 const formName = 'JoinDialogForm';
 
@@ -26,9 +27,7 @@ const JoinDialogForm = ({ joinDate, isOpen, hideDialog, handleSubmit }) => {
       onClose={hideDialog}
       aria-labelledby="join-form-dialog"
     >
-      <DialogTitle id="join-form-dialog-title">
-        {moment(joinDate).format('MM月DD日(ddd)')}
-      </DialogTitle>
+      <DialogTitle id="join-form-dialog-title">{toJpDay(joinDate)}</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogContentText>

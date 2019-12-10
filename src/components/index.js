@@ -1,4 +1,5 @@
 export * from './Calendar';
+export * from './EventDate';
 export * from './Footer';
 export * from './Header';
 export * from './Layout';

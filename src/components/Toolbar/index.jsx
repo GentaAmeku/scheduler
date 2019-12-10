@@ -5,35 +5,39 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // import SettingsIcon from '@material-ui/icons/Settings';
 import { LayoutBox, Grid, GridItem, Typography } from '../../shared';
 import { Button } from './styles';
+import EventDate from '../EventDate';
 
-export const Toolbar = ({ label, onNavigate }) => {
+export const Toolbar = ({ label, onNavigate, events }) => {
   const handleToday = () => onNavigate('TODAY');
   const handlePrev = () => onNavigate('PREV');
   const handleNext = () => onNavigate('NEXT');
   return (
     <LayoutBox mb={2}>
-      <Grid col="160px 1fr 160px">
-        <GridItem>
-          <Button variant="contained" onClick={handleToday}>
-            今日
-          </Button>
-          <IconButton onClick={handlePrev}>
-            <ChevronLeftIcon />
-          </IconButton>
-          <IconButton onClick={handleNext}>
-            <ChevronRightIcon />
-          </IconButton>
-        </GridItem>
-        <LayoutBox center>
-          <Typography>{label}</Typography>
-        </LayoutBox>
-        {/* TODO: 除外する曜日設定 */}
-        {/* <LayoutBox right>
+      <EventDate events={events} />
+      <LayoutBox mt={2}>
+        <Grid col="160px 1fr 160px">
+          <GridItem>
+            <Button variant="contained" onClick={handleToday}>
+              今日
+            </Button>
+            <IconButton onClick={handlePrev}>
+              <ChevronLeftIcon />
+            </IconButton>
+            <IconButton onClick={handleNext}>
+              <ChevronRightIcon />
+            </IconButton>
+          </GridItem>
+          <LayoutBox center>
+            <Typography>{label}</Typography>
+          </LayoutBox>
+          {/* TODO: 除外する曜日設定 */}
+          {/* <LayoutBox right>
           <IconButton>
             <SettingsIcon />
           </IconButton>
         </LayoutBox> */}
-      </Grid>
+        </Grid>
+      </LayoutBox>
     </LayoutBox>
   );
 };
