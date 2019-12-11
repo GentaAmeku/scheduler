@@ -3,7 +3,7 @@ import { TypographyStyle, GoogleFont } from 'react-typography';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { GlobalStyle } from '../../shared';
-import { LayoutBox, Container, Grid, GridItem, SEO } from '../../shared';
+import { LayoutBox, Container, SEO } from '../../shared';
 import typography from '../../theme/typography';
 
 const Head = ({ title, description }) => (
@@ -20,13 +20,7 @@ export const Layout = ({ children, ...rest }) => {
     <>
       <Head {...rest} />
       <Header />
-      <Container>
-        <LayoutBox>
-          <Grid col="1fr">
-            <GridItem>{children}</GridItem>
-          </Grid>
-        </LayoutBox>
-      </Container>
+      <Container>{children}</Container>
       <LayoutBox>
         <Footer />
       </LayoutBox>

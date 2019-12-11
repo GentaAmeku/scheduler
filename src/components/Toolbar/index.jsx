@@ -7,13 +7,13 @@ import { LayoutBox, Grid, GridItem, Typography } from '../../shared';
 import { Button } from './styles';
 import EventDate from '../EventDate';
 
-export const Toolbar = ({ label, onNavigate, events }) => {
+export const Toolbar = ({ label, onNavigate, date, events }) => {
   const handleToday = () => onNavigate('TODAY');
   const handlePrev = () => onNavigate('PREV');
   const handleNext = () => onNavigate('NEXT');
   return (
     <LayoutBox mb={2}>
-      <EventDate events={events} />
+      <EventDate events={events} date={date} />
       <LayoutBox mt={2}>
         <Grid col="160px 1fr 160px">
           <GridItem>

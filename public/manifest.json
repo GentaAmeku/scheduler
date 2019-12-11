@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "日程決め",
+  "name": "ボードゲーム日程決め",
   "icons": [
     {
       "src": "favicon.ico",

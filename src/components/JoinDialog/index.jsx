@@ -1,6 +1,5 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,15 +7,22 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { toJpDay } from '../../shared';
+import { toJpDay, Typography } from '../../shared';
 
 const formName = 'JoinDialogForm';
 
 const required = value => (value ? undefined : '必須');
+const maxLength = value =>
+  value && value.length > 8 ? `${8}文字以上は入力できないよ` : undefined;
 
 const renderTextField = ({ input, meta: { touched, error }, ...rest }) => (
   <>
     <TextField {...input} error={!!(touched && error)} {...rest} />
+    {touched && error && (
+      <Typography color="secondary" fontSize="14px">
+        {error}
+      </Typography>
+    )}
   </>
 );
 
@@ -31,13 +37,14 @@ const JoinDialogForm = ({ joinDate, isOpen, hideDialog, handleSubmit }) => {
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogContentText>
-            名前は必須、皆が分かるような名前にしよう！
+            名前は必須、皆が分かる名前にしよう！ <br />※
+            他の人と同じ名前は、登録できないよ。
           </DialogContentText>
           <Field
             name="name"
             label="名前"
             type="text"
-            validate={required}
+            validate={[required, maxLength]}
             component={renderTextField}
             fullWidth
             required
@@ -49,7 +56,7 @@ const JoinDialogForm = ({ joinDate, isOpen, hideDialog, handleSubmit }) => {
           キャンセル
         </Button>
         <Button onClick={handleSubmit} color="primary">
-          保存
+          完了
         </Button>
       </DialogActions>
     </Dialog>

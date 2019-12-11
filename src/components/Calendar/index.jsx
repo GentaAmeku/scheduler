@@ -14,6 +14,7 @@ import {
   CellFooter,
   Status,
   EventWrap,
+  EventNameCell,
 } from './styles';
 import { Typography, LayoutBox } from '../../shared';
 import { JoinDialog, Toolbar } from '../';
@@ -25,61 +26,46 @@ moment.updateLocale('ja', {
 
 const localizer = momentLocalizer(moment);
 
-const today = new Date();
-const tomorrow = 'Tue Dec 11 2019 12:14:56 GMT+0900 (日本標準時)';
-
 const initialEvents = [
   {
-    start: today,
-    end: today,
-    name: 'Ameku Genta',
+    start: new Date(),
+    end: new Date(),
+    name: 'aadsjfiuhjgiruhusadasdas',
   },
   {
-    start: today,
-    end: today,
-    name: 'Ameku Genta',
+    start: new Date(),
+    end: new Date(),
+    name: '1',
   },
   {
-    start: today,
-    end: today,
-    name: 'Ameku Genta',
+    start: new Date(),
+    end: new Date(),
+    name: '2',
   },
   {
-    start: today,
-    end: today,
-    name: 'Ameku Genta',
+    start: new Date(),
+    end: new Date(),
+    name: '3',
   },
   {
-    start: tomorrow,
-    end: tomorrow,
-    name: 'Ameku Genta',
-  },
-  {
-    start: tomorrow,
-    end: tomorrow,
-    name: 'Ameku Genta',
-  },
-  {
-    start: tomorrow,
-    end: tomorrow,
-    name: 'Ameku Genta',
-  },
-  {
-    start: tomorrow,
-    end: tomorrow,
-    name: 'Ameku Genta',
+    start: new Date(),
+    end: new Date(),
+    name: '4',
   },
 ];
 
 const IGNORE_WEEK_DAYS = ['月', '火', '水', '木'];
+const ONLINE = '#33cc33';
 
 const EventWrapper = ({ event }) => {
   return (
     <EventWrap>
-      <Status color="#33cc33" />
-      <LayoutBox marginLeft="5px">
-        <Typography fontSize="14px">{event.name}</Typography>
+      <LayoutBox>
+        <Status color={ONLINE} />
       </LayoutBox>
+      <EventNameCell>
+        <Typography fontSize="14px">{event.name}</Typography>
+      </EventNameCell>
     </EventWrap>
   );
 };
@@ -102,7 +88,6 @@ const renderDateCell = openDialog => ({ value, children }) => {
 };
 
 const renderToolbar = events => props => <Toolbar {...{ events, ...props }} />;
-
 const BigCalendar = React.memo(function BigCalendar({ openDialog, events }) {
   return (
     <CalendarStyles y={900}>

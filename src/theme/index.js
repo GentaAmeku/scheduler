@@ -1,4 +1,4 @@
-const MAIN_THEME_COLOR = '#65c7f7';
+const MAIN_THEME_COLOR = '#1976d2';
 const SUB_THEME_COLOR = '#65c7f7';
 
 export const theme = {

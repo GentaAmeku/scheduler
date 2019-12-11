@@ -1,14 +1,32 @@
 import styled from 'styled-components';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Button from '@material-ui/core/Button';
+import theme from '../../../theme';
 
 export const CalendarStyles = styled.div`
+  overflow-x: auto;
+  padding: 1px;
   .rbc {
+    &-calendar {
+      width: 1200px;
+    }
     &-toolbar {
       padding: 8px 0;
     }
     &-now {
       > a {
+        background-color: ${theme.palette.primary};
+        color: ${theme.palette.white};
+      }
+    }
+    &-date-cell {
+      padding: 6px 0;
+      > a {
+        border-radius: 50%;
+        display: block;
+        font-weight: normal;
+        margin: 0 auto;
+        width: 25px;
       }
     }
     &-today {
@@ -80,4 +98,22 @@ export const EventWrap = styled.div`
 
 export const Join = styled(Button)`
   font-size: 13px;
+`;
+
+export const EventNameCell = styled.div`
+  margin: 0 0 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
+export const Ellipsis = styled.span`
+  > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
