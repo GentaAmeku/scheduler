@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
 import theme from '../../../theme';
 
 export const CalendarStyles = styled.div`
@@ -42,7 +43,7 @@ export const CalendarStyles = styled.div`
       box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
         0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
       border-radius: 6px;
-      height: ${({ y }) => `${y}`}px;
+      height: 960px;
     }
     &-show-more {
       color: #000000;
@@ -71,9 +72,10 @@ export const CellFooter = styled.div`
   bottom: 0;
   display: flex;
   justify-content: flex-end;
-  padding: 6px;
+  padding: 2px;
   position: absolute;
   width: 100%;
+  z-index: 1;
 `;
 
 export const ToolBarWrap = styled.div`
@@ -93,11 +95,16 @@ export const Status = styled.div(
 export const EventWrap = styled.div`
   align-items: center;
   display: flex;
+  justify-content: space-between;
   padding: 2px 6px;
 `;
 
 export const Join = styled(Button)`
   font-size: 13px;
+`;
+
+export const Delete = styled(CloseIcon)`
+  font-size: 18px !important;
 `;
 
 export const EventNameCell = styled.div`
@@ -107,13 +114,5 @@ export const EventNameCell = styled.div`
   > p {
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-`;
-
-export const Ellipsis = styled.span`
-  > * {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 `;

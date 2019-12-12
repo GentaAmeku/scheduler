@@ -7,6 +7,8 @@ import moment from 'moment';
 import 'moment/locale/ja';
 import some from 'lodash/some';
 import trim from 'lodash/trim';
+import filter from 'lodash/filter';
+import IconButton from '@material-ui/core/IconButton';
 import {
   CalendarStyles,
   Join,
@@ -15,9 +17,10 @@ import {
   Status,
   EventWrap,
   EventNameCell,
+  Delete,
 } from './styles';
-import { Typography, LayoutBox } from '../../shared';
-import { JoinDialog, Toolbar } from '../';
+import { Typography, LayoutBox, useSession, useDialog } from '../../shared';
+import { JoinDialog, DeleteDialog, Toolbar } from '../';
 
 moment.locale('ja');
 moment.updateLocale('ja', {
@@ -26,56 +29,48 @@ moment.updateLocale('ja', {
 
 const localizer = momentLocalizer(moment);
 
-const initialEvents = [
-  {
-    start: new Date(),
-    end: new Date(),
-    name: 'aadsjfiuhjgiruhusadasdas',
-  },
-  {
-    start: new Date(),
-    end: new Date(),
-    name: '1',
-  },
-  {
-    start: new Date(),
-    end: new Date(),
-    name: '2',
-  },
-  {
-    start: new Date(),
-    end: new Date(),
-    name: '3',
-  },
-  {
-    start: new Date(),
-    end: new Date(),
-    name: '4',
-  },
-];
+const initialEvents = [];
 
 const IGNORE_WEEK_DAYS = ['月', '火', '水', '木'];
 const ONLINE = '#33cc33';
 
-const EventWrapper = ({ event }) => {
+const filterViewDay = viewMonth => eventGroup =>
+  eventGroup.filter(
+    ({ start }) =>
+      moment(start).format('YYYY-MM-DD') ===
+      moment(viewMonth).format('YYYY-MM-DD'),
+  );
+
+const renderEventWrapper = openDeleteDialog => ({ event }) => {
+  const { userId } = useSession();
+  const handleDeleteButton = useCallback(() => openDeleteDialog(event), [
+    event,
+  ]);
   return (
     <EventWrap>
-      <LayoutBox>
-        <Status color={ONLINE} />
+      <LayoutBox left>
+        <LayoutBox>
+          <Status color={ONLINE} />
+        </LayoutBox>
+        <EventNameCell>
+          <Typography fontSize="14px">{event.name}</Typography>
+        </EventNameCell>
       </LayoutBox>
-      <EventNameCell>
-        <Typography fontSize="14px">{event.name}</Typography>
-      </EventNameCell>
+      {userId === event.userId && (
+        <IconButton onClick={handleDeleteButton} size="small">
+          <Delete />
+        </IconButton>
+      )}
     </EventWrap>
   );
 };
 
-const renderDateCell = openDialog => ({ value, children }) => {
+const renderDateCell = openJoinDialog => ({ value, children }) => {
   const weekDayJp = moment(value).format('ddd');
   const classes = children.props.className;
   const isNoRange = classes.includes('rbc-off-range-bg');
   const isIgnoreDay = IGNORE_WEEK_DAYS.includes(weekDayJp);
-  const handleJoin = useCallback(() => openDialog(value), [value]);
+  const handleJoin = useCallback(() => openJoinDialog(value), [value]);
   return (
     <Cell className={classes}>
       <CellFooter>
@@ -88,17 +83,21 @@ const renderDateCell = openDialog => ({ value, children }) => {
 };
 
 const renderToolbar = events => props => <Toolbar {...{ events, ...props }} />;
-const BigCalendar = React.memo(function BigCalendar({ openDialog, events }) {
+const BigCalendar = React.memo(function BigCalendar({
+  openJoinDialog,
+  openDeleteDialog,
+  events,
+}) {
   return (
-    <CalendarStyles y={900}>
+    <CalendarStyles>
       <ReactBigCalendar
         localizer={localizer}
         events={events}
         views={['month']}
         components={{
           toolbar: renderToolbar(events),
-          eventWrapper: EventWrapper,
-          dateCellWrapper: renderDateCell(openDialog),
+          eventWrapper: renderEventWrapper(openDeleteDialog),
+          dateCellWrapper: renderDateCell(openJoinDialog),
         }}
         popup
         messages={{
@@ -110,27 +109,52 @@ const BigCalendar = React.memo(function BigCalendar({ openDialog, events }) {
 });
 
 export const Calendar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [joinDate, setJoinDate] = useState('');
+  const [selectedEvent, setSelectedEvent] = useState({ start: '', name: '' });
   const [events, setEvents] = useState(initialEvents);
-  const openDialog = React.useCallback(value => {
-    setJoinDate(value);
-    setIsOpen(true);
-  }, []);
-  const hideDialog = () => setIsOpen(false);
+  const { userId } = useSession();
+  const [isJoinDialogOpen, openJoinDialog, hideJoinDialog] = useDialog(start =>
+    setSelectedEvent({ start }),
+  );
+  const [
+    isDeleteDialogOpen,
+    openDeleteDialog,
+    hideDeleteDialog,
+  ] = useDialog(event => setSelectedEvent(event));
   const handleSubmit = values => {
+    const dayEvent = filterViewDay(selectedEvent.start)(events);
     const name = trim(values.name);
-    if (!some(events, { name })) {
-      setEvents([...events, { name, start: joinDate, end: joinDate }]);
+    if (!some(dayEvent, { name })) {
+      setEvents([
+        ...events,
+        { userId, name, start: selectedEvent.start, end: selectedEvent.start },
+      ]);
     }
-    hideDialog();
+    hideJoinDialog();
+  };
+  const handleDelete = () => {
+    setEvents(
+      filter(events, event =>
+        event.start === selectedEvent.start && event.name === selectedEvent.name
+          ? false
+          : true,
+      ),
+    );
+    hideDeleteDialog();
   };
   return (
     <>
-      <BigCalendar {...{ events, openDialog }} />
+      <BigCalendar {...{ events, openJoinDialog, openDeleteDialog }} />
       <JoinDialog
-        {...{ joinDate, isOpen, hideDialog }}
+        targetDate={selectedEvent.start}
+        isOpen={isJoinDialogOpen}
+        hideDialog={hideJoinDialog}
         onSubmit={handleSubmit}
+      />
+      <DeleteDialog
+        targetDate={selectedEvent.start}
+        isOpen={isDeleteDialogOpen}
+        hideDialog={hideDeleteDialog}
+        onSubmit={handleDelete}
       />
     </>
   );

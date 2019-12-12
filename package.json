@@ -25,7 +25,8 @@
     "redux": "^4.0.4",
     "redux-form": "^8.2.6",
     "styled-components": "^4.4.1",
-    "typography": "^0.16.19"
+    "typography": "^0.16.19",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@types/react-big-calendar": "^0.22.3",

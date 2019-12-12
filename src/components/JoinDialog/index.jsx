@@ -26,14 +26,16 @@ const renderTextField = ({ input, meta: { touched, error }, ...rest }) => (
   </>
 );
 
-const JoinDialogForm = ({ joinDate, isOpen, hideDialog, handleSubmit }) => {
+const JoinDialogForm = ({ targetDate, isOpen, hideDialog, handleSubmit }) => {
   return (
     <Dialog
       open={isOpen}
       onClose={hideDialog}
       aria-labelledby="join-form-dialog"
     >
-      <DialogTitle id="join-form-dialog-title">{toJpDay(joinDate)}</DialogTitle>
+      <DialogTitle id="join-form-dialog-title">
+        {toJpDay(targetDate)}
+      </DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogContentText>

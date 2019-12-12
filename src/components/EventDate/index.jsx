@@ -49,14 +49,16 @@ export const EventDate = ({ events, date }) => {
                 <Typography fontSize="18px">
                   {toJpDay(scheduledDate)}
                 </Typography>
-                {member.map((name, i) => (
-                  <LayoutBox ml={2} key={name}>
-                    <Typography component="span">{name}</Typography>
-                    {i !== member.length && (
-                      <Typography component="span">,</Typography>
-                    )}
-                  </LayoutBox>
-                ))}
+                <LayoutBox left flexWrap="wrap">
+                  {member.map((name, i) => (
+                    <React.Fragment key={name}>
+                      {i !== 0 && <Typography component="span">,</Typography>}
+                      <LayoutBox ml={2}>
+                        <Typography component="span">{name}</Typography>
+                      </LayoutBox>
+                    </React.Fragment>
+                  ))}
+                </LayoutBox>
               </LayoutBox>
             ))}
           </>
