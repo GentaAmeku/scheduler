@@ -19,7 +19,13 @@ import {
   EventNameCell,
   Delete,
 } from './styles';
-import { Typography, LayoutBox, useSession, useDialog } from '../../shared';
+import {
+  Typography,
+  LayoutBox,
+  useSession,
+  useDialog,
+  useEvents,
+} from '../../shared';
 import { JoinDialog, DeleteDialog, Toolbar } from '../';
 
 moment.locale('ja');
@@ -28,8 +34,6 @@ moment.updateLocale('ja', {
 });
 
 const localizer = momentLocalizer(moment);
-
-const initialEvents = [];
 
 const IGNORE_WEEK_DAYS = ['月', '火', '水', '木'];
 const ONLINE = '#33cc33';
@@ -110,7 +114,9 @@ const BigCalendar = React.memo(function BigCalendar({
 
 export const Calendar = () => {
   const [selectedEvent, setSelectedEvent] = useState({ start: '', name: '' });
-  const [events, setEvents] = useState(initialEvents);
+  // const [events, setEvents] = useState(initialEvents);
+  const { events, set } = useEvents();
+  console.log(events);
   const { userId } = useSession();
   const [isJoinDialogOpen, openJoinDialog, hideJoinDialog] = useDialog(start =>
     setSelectedEvent({ start }),
@@ -124,21 +130,26 @@ export const Calendar = () => {
     const dayEvent = filterViewDay(selectedEvent.start)(events);
     const name = trim(values.name);
     if (!some(dayEvent, { name })) {
-      setEvents([
+      const values = [
         ...events,
-        { userId, name, start: selectedEvent.start, end: selectedEvent.start },
-      ]);
+        {
+          userId,
+          name,
+          start: selectedEvent.start,
+          end: selectedEvent.start,
+        },
+      ];
+      set({ values });
     }
     hideJoinDialog();
   };
   const handleDelete = () => {
-    setEvents(
-      filter(events, event =>
-        event.start === selectedEvent.start && event.name === selectedEvent.name
-          ? false
-          : true,
-      ),
+    const values = filter(events, event =>
+      event.start === selectedEvent.start && event.name === selectedEvent.name
+        ? false
+        : true,
     );
+    set({ values });
     hideDeleteDialog();
   };
   return (

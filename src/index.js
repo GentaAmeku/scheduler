@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { FirebaseApp } from './shared';
 
 const reducer = combineReducers({
   form: formReducer,
@@ -14,11 +15,13 @@ const reducer = combineReducers({
 const store = createStore(reducer);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <FirebaseApp>
+        <App />
+      </FirebaseApp>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
 
