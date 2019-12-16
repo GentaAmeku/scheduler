@@ -2,6 +2,15 @@ import { useContext, useRef, useState, useEffect } from 'react';
 import isString from 'lodash/isString';
 import { FirebaseContext } from '../contexts';
 
+const DUMMY_DATA = [
+  {
+    start: new Date(),
+    end: new Date(),
+    userId: '',
+    name: 'DUMMY',
+  },
+];
+
 const COLLENCTION = 'events';
 const DOCUMENT = 'yUVvA0BxL5lUMb7VBDST';
 
@@ -24,9 +33,10 @@ export const useEvents = () => {
     setLoading(true);
     // const { year, month } = query;
     try {
-      const docs = await doc.get();
-      const { events } = docs.data();
-      const eventsData = events.map(toDate);
+      // const docs = await doc.get();
+      // const { events } = docs.data();
+      // const eventsData = events.map(toDate);
+      const eventsData = DUMMY_DATA;
       setEvents(eventsData);
       setError(null);
     } catch (err) {
@@ -39,7 +49,7 @@ export const useEvents = () => {
     setLoading(true);
     const { year, month, values } = query;
     try {
-      await doc.set({ events: values });
+      // await doc.set({ events: values });
       setEvents(values);
       setError(null);
     } catch (err) {

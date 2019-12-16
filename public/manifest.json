@@ -1,6 +1,6 @@
 {
-  "short_name": "日程決め",
-  "name": "ボードゲーム日程決め",
+  "short_name": "ボドカレ",
+  "name": "ボードゲームカレンダー",
   "icons": [
     {
       "src": "favicon.ico",

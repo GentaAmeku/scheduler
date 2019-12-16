@@ -2,16 +2,16 @@ import React from 'react';
 import Helmet from 'react-helmet';
 
 const siteMetadata = {
-  siteName: 'scheduler',
-  title: 'Scheduler',
-  description: 'description',
+  siteName: 'BoardGameCalendar',
+  title: 'ボードゲームカレンダー',
+  description: 'ボードゲームの日程を決めるためのカレンダー。月1で開催目標！',
   lang: 'ja',
-  shortName: 'shortname',
-  author: 'Amahisa',
+  shortName: 'ボドカレ',
+  author: 'GentaAmeku',
   pathPrefix: '/',
   siteUrl: 'https://example.com',
   background_color: '#ffffff', // アプリ起動時の背景色
-  theme_color: '#65c7f7', // ブラウザツールバーの色
+  theme_color: '#ffffff', // ブラウザツールバーの色
   favicon: 'src/images/favicon.jpg',
   logo: 'src/images/logo.png',
   googleAnalyticsID: 'UA-XXXXXXXX-1',
@@ -34,6 +34,10 @@ export const SEO = ({ title = '', description }) => {
         {
           property: `og:title`,
           content: title,
+        },
+        {
+          property: `theme-color`,
+          content: siteMetadata.theme_color,
         },
         {
           property: `og:description`,
