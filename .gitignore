@@ -11,6 +11,11 @@
 # production
 /build
 .env
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+.firebase
 
 # misc
 .DS_Store
