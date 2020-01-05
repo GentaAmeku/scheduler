@@ -33,10 +33,9 @@ export const useEvents = () => {
     setLoading(true);
     // const { year, month } = query;
     try {
-      // const docs = await doc.get();
-      // const { events } = docs.data();
-      // const eventsData = events.map(toDate);
-      const eventsData = DUMMY_DATA;
+      const docs = await doc.get();
+      const { events } = docs.data();
+      const eventsData = events.map(toDate);
       setEvents(eventsData);
       setError(null);
     } catch (err) {
@@ -49,7 +48,7 @@ export const useEvents = () => {
     setLoading(true);
     const { year, month, values } = query;
     try {
-      // await doc.set({ events: values });
+      await doc.set({ events: values });
       setEvents(values);
       setError(null);
     } catch (err) {

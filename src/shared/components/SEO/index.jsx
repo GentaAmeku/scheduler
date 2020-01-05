@@ -15,6 +15,7 @@ const siteMetadata = {
   favicon: 'src/images/favicon.jpg',
   logo: 'src/images/logo.png',
   googleAnalyticsID: 'UA-XXXXXXXX-1',
+  robots: 'noindex, nofollow',
 };
 
 export const SEO = ({ title = '', description }) => {
@@ -70,6 +71,10 @@ export const SEO = ({ title = '', description }) => {
         {
           name: `twitter:description`,
           content: metaDescription,
+        },
+        {
+          name: `robots`,
+          content: siteMetadata.robots,
         },
       ]}
     />

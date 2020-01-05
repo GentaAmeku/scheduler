@@ -114,7 +114,6 @@ const BigCalendar = React.memo(function BigCalendar({
 
 export const Calendar = () => {
   const [selectedEvent, setSelectedEvent] = useState({ start: '', name: '' });
-  // const [events, setEvents] = useState(initialEvents);
   const { events, set } = useEvents();
   const { userId } = useSession();
   const [isJoinDialogOpen, openJoinDialog, hideJoinDialog] = useDialog(start =>
